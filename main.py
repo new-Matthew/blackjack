@@ -18,6 +18,7 @@ def calculate_score(cards):
         return 0
     if 11 in cards and score > 21:
         cards.remove(11)
+        cards.append(1)
         
     return sum(cards)
 
