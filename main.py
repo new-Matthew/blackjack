@@ -1,8 +1,11 @@
 import random
+print("Bem Vindo Ao Jogo Blackjack!!")
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 
 user_hand = []
 computer_hand = []
+#user_score = -1 # testar se vai precisar
+#computer_score = -1
 
 def deal_card():
     take_another_card = random.choice(cards)
@@ -22,28 +25,44 @@ def calculate_score(cards):
         
     return sum(cards)
 
+def compare(u_score, c_score):
+    if u_score == 0:
+        return "Você venceu com um Blackjack!"
+    elif c_score == 0:
+        return "Você perdeu o oponente obteve um Blackjack!"
+    elif u_score > 21:
+        return "Você perdeu!"
+    elif c_score > 21:
+        return "Você venceu!"
+    elif u_score > c_score:
+        return "Você venceu"
+    elif c_score == u_score:
+        return "Empate!"
+    else:
+        return "Você perdeu!"
+
 is_game_over = False
 
 while not is_game_over:
     user_score = calculate_score(user_hand)
     computer_score = calculate_score(computer_hand)
 
+    print("--------------------------------------------------------------------")
     print(f"Sua mão é: {user_hand} sua pontuação é: {user_score} ")
-
     print(f"A primeira carta da mão do oponente é: {computer_hand[0]}")
 
-    if user_score == 0 or computer_score == 0 or user_score > 21 or computer_score > 21:
-        print("game over!")
-        is_game_over = True
+    ask_draw_card = input("Quer puxar uma carta? digite 's' ou 'n' ")
+    if ask_draw_card == 's':
+        user_hand.append(deal_card())
     else:
-        ask_draw_card = input("Quer puxar uma carta? digite 's' ou 'n' ")
-        if ask_draw_card == 's':
-            user_hand.append(deal_card())
-        else:
-            is_game_over = True
+        is_game_over = True
 
 while computer_score != 0 and computer_score < 17:
     computer_hand.append(deal_card())
     computer_score = calculate_score(computer_hand)
-    print(computer_hand)
-    print(computer_score)
+
+print(f"Sua mão final é: {user_hand} sua pontuação final é: {user_score}")
+print(f"A mão final do oponente é: {computer_hand} a pontuação final do oponente é: {computer_score}")
+result = compare_scores = compare(user_score, computer_score)
+print(result)
+
