@@ -16,16 +16,27 @@ def calculate_score(cards):
     score = sum(cards)
     if score == 21 and len(cards) == 2:
         return 0
-    if 11 in cards and score > 21: # quando tiver dois Áses
+    if 11 in cards and score > 21:
         cards.remove(11)
         
     return sum(cards)
 
-user_score = calculate_score(user_hand)
-computer_score = calculate_score(computer_hand)
+is_game_over = False
 
-print(user_hand)
-print(user_score)
+while not is_game_over:
+    user_score = calculate_score(user_hand)
+    computer_score = calculate_score(computer_hand)
 
-print(computer_hand)
-print(computer_score)
+    print(f"Sua mão é: {user_hand} sua pontuação é: {user_score} ")
+
+    print(f"A primeira carta da mão do oponente é: {computer_hand[0]}")
+
+    if user_score == 0 or computer_score == 0 or user_score > 21 or computer_score > 21:
+        print("game over!")
+        is_game_over = True
+    else:
+        ask_draw_card = input("Quer puxar uma carta? digite 's' ou 'n' ")
+        if ask_draw_card == 's':
+            user_hand.append(deal_card())
+        else:
+            is_game_over = True
